@@ -11,8 +11,7 @@ let playing = false;
 const myPlayer = videojs("my-video");
 let peer;
 let conn;
-let isLocalSeek = false;
-let isForeignSeek = false;
+let isLocalSeek = true;
 
 fileInput.onchange = () => {
   console.log("fileinput onchange");
@@ -52,10 +51,10 @@ function readyPlayer() {
   myPlayer.on("pause", () => conn.send({ event: "PAUSE" }));
   myPlayer.on("ended", () => conn.send({ event: "ENDED" }));
   myPlayer.on("seeked", (event) => {
-    if (!isForeignSeek) {
-      isLocalSeek = true;
+    if (isLocalSeek) {
       conn.send({ event: "SEEKED", data: event.target.player.currentTime() });
-    } else isForeignSeek = true;
+    }
+    isLocalSeek = true;
   });
   readytext.textContent = "Press play to start!";
 }
@@ -114,9 +113,7 @@ function onData(input) {
   } else if (event === "ENDED") {
     alert("Thanks for the lovely date Anu 😘");
   } else if (event === "SEEKED") {
-    if (!isLocalSeek) {
-      myPlayer.currentTime(data);
-      isForeignSeek = true;
-    } else isLocalSeek = true;
+    myPlayer.currentTime(data);
+    isLocalSeek = false;
   }
 }
