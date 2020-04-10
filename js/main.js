@@ -87,7 +87,7 @@ function handleincoming(con) {
  * @param {*} input The data received.
  */
 function onData(input) {
-  console.log("got data " + data);
+  console.log("got data " + input);
   const { event, data } = input;
   if (event == "READY") {
     if (myPlayer.readyState() == 0) {
