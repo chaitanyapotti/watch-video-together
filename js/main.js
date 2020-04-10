@@ -49,7 +49,7 @@ function readyPlayer() {
   myPlayer.on("play", () => conn.send({ event: "PLAY" }));
   myPlayer.on("pause", () => conn.send({ event: "PAUSE" }));
   myPlayer.on("ended", () => conn.send({ event: "ENDED" }));
-  myPlayer.on("seeked", (data) => conn.send({ event: "SEEKED", data: data }));
+  myPlayer.on("seeked", (event) => conn.send({ event: "SEEKED", data: event.target.currentTime }));
   readytext.textContent = "Press play to start!";
 }
 
@@ -87,19 +87,19 @@ function handleincoming(con) {
  * @param {*} input The data received.
  */
 function onData(input) {
-  console.log("got data " + input);
+  console.log("got data ", input);
   const { event, data } = input;
   if (event == "READY") {
-    if (myPlayer.readyState() == 0) {
+    if (myPlayer.readyState === 0) {
       readyPlayer();
       conn.send("READY");
     }
-  } else if (event == "PLAY") {
+  } else if (event === "PLAY") {
     if (!playing) {
       myPlayer.play();
       playing = true;
     }
-  } else if (event == "PAUSE") {
+  } else if (event === "PAUSE") {
     if (playing) {
       myPlayer.pause();
       playing = false;
@@ -107,6 +107,6 @@ function onData(input) {
   } else if (event === "ENDED") {
     alert("Thanks for the lovely date Anu 😘");
   } else if (event === "SEEKED") {
-    myPlayer.currentTime = data.target.currentTime
+    myPlayer.currentTime = data
   }
 }
