@@ -55,7 +55,7 @@ function readyPlayer() {
     if (!isForeignSeek) {
       isLocalSeek = true;
       conn.send({ event: "SEEKED", data: event.target.player.currentTime() });
-    } else isForeignSeek = false;
+    } else isForeignSeek = true;
   });
   readytext.textContent = "Press play to start!";
 }
