@@ -1,0 +1,19 @@
+{
+  "name": "watchvideotogether",
+  "version": "0.0.1",
+  "description": "An app that let's you watch local videos together",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "./node_modules/.bin/eslint \"./**/*.js\""
+  },
+  "author": "Chaitanya Potti",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-google": "^0.13.0"
+  }
+}
