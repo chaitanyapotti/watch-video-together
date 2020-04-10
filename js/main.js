@@ -49,7 +49,7 @@ function readyPlayer() {
   myPlayer.on("play", () => conn.send({ event: "PLAY" }));
   myPlayer.on("pause", () => conn.send({ event: "PAUSE" }));
   myPlayer.on("ended", () => conn.send({ event: "ENDED" }));
-  myPlayer.on("seeked", (event) => conn.send({ event: "SEEKED", data: event.target.currentTime }));
+  myPlayer.on("seeked", (event) => conn.send({ event: "SEEKED", data: event.target.player.currentTime() }));
   readytext.textContent = "Press play to start!";
 }
 
@@ -107,6 +107,6 @@ function onData(input) {
   } else if (event === "ENDED") {
     alert("Thanks for the lovely date Anu 😘");
   } else if (event === "SEEKED") {
-    myPlayer.currentTime = data
+    myPlayer.currentTime(data)
   }
 }
